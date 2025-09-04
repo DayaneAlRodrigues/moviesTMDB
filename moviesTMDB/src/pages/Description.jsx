@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getMovieDetails } from "../api/tmdb";
 import LoadingSpinner from "../components/LoadingSpinner";
-import {addFavorite, removeFavorite, isFavorite} from "../utils/localStorage";
+import {isFavorite} from "../utils/localStorage";
 const DetailContainer = styled.div `
 `;
 
@@ -24,8 +24,7 @@ const CastList = styled.ul `
 `;
 const CastItem = styled.li `
 `;
-const FavoriteButton = styled.button `
-`;
+
 
 const Description = () => {
     const { id} = useParams();
@@ -52,16 +51,7 @@ const Description = () => {
         fetchMovie();
     }, [id]);
 
-    const handleFavoriteToggle = () => {
-        if(movie) {
-            if(isMovieFavorite) {
-                removeFavorite(movie.id);
-            }else {
-                addFavorite(movie);
-            }
-            setIsMovieFavorite(!isMovieFavorite);
-        }
-    };
+    
 
     if (loading) return <LoadingSpinner/>;
     if(error) return <p style={{color:"red", textAlign:"center"}}>{error}</p>
@@ -101,9 +91,6 @@ const Description = () => {
                     ' N/A'
                     )}
                 </DetailItem>
-                <FavoriteButton isFavorite={isMovieFavorite} onClick={handleFavoriteToggle}>
-                    {isMovieFavorite ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
-                </FavoriteButton>
             </InfoSection>
         </DetailContainer>
     )

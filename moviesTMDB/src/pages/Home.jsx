@@ -25,10 +25,11 @@ const SearchInput = styled.input `
     background-color: var(--bg-input);
     color: var(--primary-color);
     margin-bottom: 30px;
+    margin-top:30px;
 
     &:focus {
         outline: none;
-        border-color: #007bff
+        border-color: var(--color-hover);
     }
 `;
 

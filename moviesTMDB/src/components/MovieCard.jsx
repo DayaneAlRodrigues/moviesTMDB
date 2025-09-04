@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { isFavorite, addFavorite, removeFavorite } from "../utils/localStorage";
 const Card = styled.div `
     background-color: var(--bg-color);
     border-radius: 8px;
@@ -53,6 +55,21 @@ const DetailsButton = styled(Link) `
 
 `;
 
+const FavoriteButton = styled(Link) `
+    display:block;
+    background-color: ${props => props.isFav ? 'var(--primary-color)' : 'var(--bg-input)'};
+    color: ${props => props.isFav ? 'white' : 'var(--primary-color)'};
+    text-align: center;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: ${props => props.isFav ? 'var(--secundary-color)' : 'var(--bg-color)'};
+    }
+`;
+
 
 const MovieCard = ({movie}) => {
     const posterUrl = movie.poster_path
@@ -61,6 +78,20 @@ const MovieCard = ({movie}) => {
 
     const releaseYear = movie.release_date ? movie.release_date.substring(0, 4) : 'N/A';
 
+    const [isFav, setIsFav] = useState(false);
+
+    useEffect(() => {
+        setIsFav(isFavorite(movie.id));
+    }, [movie.id]);
+
+    const handleFavoriteToggle = () => {
+        if (isFav) {
+            removeFavorite(movie.id);
+        } else {
+            addFavorite(movie);
+        }
+        setIsFav(!isFav);
+    };
     return (
         <Card>
             <Poster src={posterUrl} alt={movie.title} />
@@ -68,6 +99,9 @@ const MovieCard = ({movie}) => {
                 <Title>{movie.title}</Title>
                 <ReleaseYear>Ano: {releaseYear}</ReleaseYear>
                 <DetailsButton to={`/movie/${movie.id}`}>Ver Detalhes</DetailsButton>
+                <FavoriteButton onClick={handleFavoriteToggle} isFav={isFav}>
+                    {isFav ? 'Remover' : 'Favoritar'} 
+                </FavoriteButton>
             </MovieInfo>
         </Card>
 

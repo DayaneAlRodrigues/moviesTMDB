@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { getFavorites, removeFavorite} from "../utils/localStorage";
+import { getFavorites} from "../utils/localStorage";
 import MovieCard from "../components/MovieCard";
 import { useEffect, useState } from "react";
 
@@ -26,9 +26,6 @@ const Favorites = () => {
         );
     }
 
-    const handleRemoveFavorites = (movieId) => {
-        removeFavorite(movieId);
-    }
     return (
         <FavoritesContainer>
             <h1>Meus Filmes Favoritos</h1>
@@ -36,7 +33,6 @@ const Favorites = () => {
                 {favorites.map((movie) => (
                     <div>
                         <MovieCard key={movie.id} movie={movie} />
-                        <button onClick={() => handleRemoveFavorites(movie.id)}>Remover</button>
                     </div>
                     
                 ))}
