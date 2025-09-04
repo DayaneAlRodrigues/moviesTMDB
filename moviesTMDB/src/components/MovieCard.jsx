@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 const Card = styled.div `
     background-color: var(--bg-color);
     border-radius: 8px;
@@ -13,7 +13,8 @@ const Card = styled.div `
 const Poster = styled.img `
     width: 100%;
     heigth: 300px;
-    object-fit:cover
+    object-fit:cover;
+    border: 1px solid var(--border-color);
 `;
 
 const MovieInfo = styled.div `
